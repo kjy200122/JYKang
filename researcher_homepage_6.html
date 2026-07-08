@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jersey+20&family=Press+Start+2P&family=Manrope:wght@300;400;500;700&family=Kode+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"> <style>
   :root{
-    --scr-0:#882e2e;   /* dark red — ink / strong borders */
-    --scr-1:#b5615f;   /* muted rose — secondary panels, muted text */
-    --scr-2:#ffbfac;   /* coral — card fill */
+    --scr-0:#88622e;   /* dark red — ink / strong borders */
+    --scr-1:#D57530;   /* muted rose — secondary panels, muted text */
+    --scr-2:#f2e6cb;   /* coral — card fill */
     --scr-3:#ffffff;   /* main screen background — now plain white */
-    --accent:#e2434f;  /* vivid red — power-LED / highlight, used sparingly */
+    --accent:#C54F2D;  /* vivid red — power-LED / highlight, used sparingly */
     --font-display:'Press Start 2P', monospace;
     --font-body:'Kode Mono', monospace;
     --font-jer: 'Jersey 20', sans-serif;
@@ -68,13 +68,13 @@
     font-size: 0.85rem;
     letter-spacing:0.04em;
   }
-  .power{ display:flex; align-items:center; gap:8px; }
+  .power{ display:flex; align-items:center; gap:8px;font-family: var(--font-body); font-weight: 500; }
   .power-led{
     width:9px; height:9px; border-radius:50%;
     background:var(--accent);
     box-shadow: 0 0 5px var(--accent);
   }
-  .lv-tag{ opacity:0.85; }
+  .lv-tag{ opacity:0.85; font-family: var(--font-body); font-weight: 500;}
 
   .wrap{ max-width: 760px; margin:0 auto; padding: 0 26px; position:relative; z-index:1; }
   section{ padding: 64px 0; position:relative; }
@@ -150,8 +150,8 @@
     line-height:1.5;
     max-width: 540px;
     margin: 0 0 26px 0;
-    letter-spacing:-1.2px;
-    font-weight: 500; 
+    letter-spacing:-1px;
+    font-weight: 600; 
   }
   .stat-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px;
     font-family: var(--font-body);
@@ -167,6 +167,7 @@
   }
   .press-start{
     font-family:var(--font-display); font-size:1.5rem; line-height:1.8;
+    transform: scaleY(1.05);
     background:none; border:3px solid var(--scr-0); color:var(--scr-0);
     padding:12px 16px; cursor:pointer;
   }
@@ -179,11 +180,11 @@
     line-height:1.6;
     margin: 0 0 34px 0;
     display:flex; align-items:center; gap:12px;
+    transform: scaleY(1.1);
   }
   h2.section-title .tag-no{
     font-size:0.8rem;
-    background:var(--scr-2);
-    border:2px solid var(--scr-0);
+    border:3px solid var(--scr-0);
     padding:4px 8px;
   }
 
@@ -194,36 +195,48 @@
     border: 3px solid var(--scr-0);
     box-shadow: 0 0 0 3px var(--scr-3) inset;
     padding: 26px 28px 34px;
+    font-family:var(--font-body);
+    
   }
-  .textbox p{ margin:0 0 14px 0; font-size:1.2rem; line-height:1.55; }
+  .textbox p{ margin:0 0 14px 0; font-size:1rem; line-height:1.55; font-weight: 500;}
   .textbox p:last-of-type{ margin-bottom:0; }
   .continue-cursor{
     position:absolute; right:16px; bottom:10px;
-    font-family:var(--font-display); font-size:0.7rem;
+    font-family:var(--font-body); font-size:0.7rem;
   }
 
   .about-grid{ display:flex; gap:26px; align-items:flex-start; }
   @media (max-width:600px){ .about-grid{ flex-direction:column; } }
   .sprite{
     flex-shrink:0;
-    width:88px; height:88px;
+    width: 200px; height:250px;
     background:var(--scr-0); color:var(--scr-3);
     display:flex; align-items:center; justify-content:center;
     font-family:var(--font-display); font-size:1.1rem;
     border:3px solid var(--scr-0);
     box-shadow: 3px 3px 0 var(--scr-1), 0 0 0 3px var(--scr-3) inset;
   }
+  .sprite img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 또는 contain */
+    display: block;
+}
 
   /* ---------- interests: item grid ---------- */
-  .items-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 16px;
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+
+    width: 100%;
+    max-width: 900px;
   }
   .item-slot{
     background:var(--scr-2);
     border:3px solid var(--scr-0);
     padding:16px 16px 18px;
+    font-family:var(--font-body); font-weight: 500;
   }
   .item-slot .glyph{
     width:28px; height:28px;
@@ -233,10 +246,10 @@
     margin-bottom:12px;
   }
   .item-slot h3{
-    font-family:var(--font-display); font-size:0.8rem; line-height:1.5;
+    font-family:var(--font-display); font-size:1.1rem; line-height:1.5;
     margin:0 0 8px 0; text-transform:uppercase;
   }
-  .item-slot p{ margin:0; font-size:1.05rem; line-height:1.4; }
+  .item-slot p{ margin:0; font-size:1.05rem; line-height:1.4;}
 
   /* ---------- publications: quest log ---------- */
   .quest-log{ display:flex; flex-direction:column; gap:16px; }
@@ -310,7 +323,7 @@
 
   <div class="topbar">
     <span class="power"><span class="power-led"></span>POWER</span>
-    <span class="lv-tag">LV. M.S. CANDIDATE</span>
+    <span class="lv-tag">Level. Master's Student</span>
   </div>
 
   <nav class="menu-box" aria-label="section navigation">
@@ -325,11 +338,11 @@
   <header class="hero wrap">
     <span class="eyebrow">LOADING PROFILE<span class="blink">...</span></span>
     <h1 class="name"><mark class="highlight">Jungyoon Kang</mark></h1>
-    <p class="tagline">Master's student in Clinical Psychology at Seoul National University — researching emotion regulation, anxiety, and digital tools for mental health care.</p>
+    <p class="tagline">Master's student in Clinical Psychology at Seoul National University — researching addiction, computational psychiatry, and neuromodulation for mental health.</p>
     <div class="stat-row">
       <span class="tag">[ Clinical Psychology ]</span>
       <span class="tag">[ Computational Clinical Science ]</span>
-      <span class="tag">[ Seoul National University ]</span>
+      <span class="tag">[ Computational Psychiatry ]</span>
 
     </div>
     <button class="press-start" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">
@@ -342,11 +355,14 @@
     <div class="wrap reveal">
       <h2 class="section-title"><span class="tag-no">01</span>About</h2>
       <div class="about-grid">
-        <div class="sprite" aria-hidden="true">JK</div>
+        <div class="sprite" aria-hidden="true">
+        <img src="IMG.jpg" alt="Jungyoon Kang"></div>
         <div class="textbox" style="flex:1;">
-          <p>I'm a master's student in <strong>Clinical Psychology</strong> at Seoul National University. I'm curious about how people regulate difficult emotions, and how that understanding can shape better, more accessible mental health care.</p>
-          <p>My current work looks at anxiety and mood-related difficulties, and how everyday tools — from self-report measures to digital interventions — can be designed to actually reflect a person's experience rather than flatten it.</p>
-          <p>Outside of research, I enjoy long walks, good coffee, and conversations that wander off-topic in useful ways.</p>
+          <p>I'm a master's student in <strong>Clinical Psychology</strong> at Seoul National University. My research focuses on addiction, particularly how decision-making processes shape addictive behaviors and why some individuals continue making choices that conflict with their long-term goals.</p>
+
+          <p>I'm interested in using <strong>computational modeling</strong> to uncover the latent cognitive mechanisms underlying impulsive and maladaptive decision-making. Rather than describing behavior at the surface level, I aim to understand the computational processes that give rise to individual differences in addiction.</p>
+
+          <p>Among various forms of addiction, I'm especially interested in <strong>behavioral addictions</strong>, where advances in computational psychiatry and cognitive neuroscience continue to reshape our understanding of addictive behavior. More recently, I've been studying <strong>non-invasive brain stimulation</strong> as a promising approach to modulating cognitive control and developing more effective interventions for addiction.</p>
           <span class="continue-cursor blink">▼</span>
         </div>
       </div>
@@ -358,26 +374,31 @@
     <div class="wrap reveal">
       <h2 class="section-title"><span class="tag-no">02</span>Interests</h2>
       <div class="items-grid">
+
         <div class="item-slot">
           <div class="glyph">01</div>
-          <h3>Emotion Regulation</h3>
-          <p>How people manage and reinterpret emotional experiences, and where regulation strategies break down.</p>
+          <h3>Addiction</h3>
+          <p>Understanding how cognitive and neural mechanisms shape addictive behaviors across substance and behavioral addictions.</p>
         </div>
+
         <div class="item-slot">
           <div class="glyph">02</div>
-          <h3>Anxiety &amp; Mood</h3>
-          <p>Cognitive and behavioral patterns underlying anxiety, and how they shift across contexts.</p>
+          <h3>Decision-Making</h3>
+          <p>Investigating impulsive and maladaptive choices through reinforcement learning, valuation, and cognitive control.</p>
         </div>
+
         <div class="item-slot">
           <div class="glyph">03</div>
-          <h3>Digital Mental Health</h3>
-          <p>Designing and evaluating app- or web-based interventions that support clinical care.</p>
+          <h3>Computational Psychiatry</h3>
+          <p>Using computational modeling to reveal the latent cognitive processes underlying individual differences in behavior.</p>
         </div>
+
         <div class="item-slot">
           <div class="glyph">04</div>
-          <h3>Assessment</h3>
-          <p>Building measures that capture lived experience more faithfully than standard checklists.</p>
+          <h3>Neuromodulation</h3>
+          <p>Exploring non-invasive brain stimulation as a tool for understanding neural circuits and improving addiction treatment.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -389,8 +410,8 @@
       <div class="quest-log">
         <article class="quest-entry">
           <div class="quest-head">
-            <span class="quest-id">QUEST No.001</span>
-            <span class="quest-status">✔ COMPLETE — 2025</span>
+            <span class="quest-id">No.001</span>
+            <!-- <span class="quest-status">✔ COMPLETE — 2025</span> -->
           </div>
           <h3 class="quest-title">Emotion Regulation Strategies and Anxiety Symptom Trajectories (sample title)</h3>
           <p class="quest-venue">Journal of Clinical Psychology, 2025</p>
@@ -400,7 +421,7 @@
             <a href="#">[ DOI ]</a>
           </div>
         </article>
-        <article class="quest-entry">
+        <!-- <article class="quest-entry">
           <div class="quest-head">
             <span class="quest-id">QUEST No.002</span>
             <span class="quest-status">✔ COMPLETE — 2024</span>
@@ -423,7 +444,7 @@
           <div class="quest-links">
             <a href="#">[ PDF ]</a>
           </div>
-        </article>
+        </article> -->
       </div>
     </div>
   </section>
