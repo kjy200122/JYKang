@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jungyoon Kang — Clinical Psychology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+20&family=Press+Start+2P&family=Manrope:wght@300;400;500;700&family=Kode+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"> <style>
+  :root{
+    --scr-0:#882e2e;   /* dark red — ink / strong borders */
+    --scr-1:#b5615f;   /* muted rose — secondary panels, muted text */
+    --scr-2:#ffbfac;   /* coral — card fill */
+    --scr-3:#ffffff;   /* main screen background — now plain white */
+    --accent:#e2434f;  /* vivid red — power-LED / highlight, used sparingly */
+    --font-display:'Press Start 2P', monospace;
+    --font-body:'Kode Mono', monospace;
+    --font-jer: 'Jersey 20', sans-serif;
+
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--scr-3);
+    color:var(--scr-0);
+    font-family:var(--font-j15);
+    -webkit-font-smoothing:none;
+    font-smooth:never;
+  }
+
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ---------- the "screen" ---------- */
+  .screen{
+    max-width: 900px;
+    margin: 0 auto;
+    background:var(--scr-3);
+    border: 6px solid var(--scr-0);
+    border-radius: 10px;
+    position:relative;
+    overflow:hidden;
+    box-shadow: 0 0 0 10px var(--scr-1) inset;
+  }
+  .screen::after{
+    content:'';
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(to bottom, rgba(15,56,15,0.05) 0px, rgba(15,56,15,0.05) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    z-index:5;
+  }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 10px 20px;
+    border-bottom: 3px solid var(--scr-0);
+    background: var(--scr-2);
+    font-size: 0.85rem;
+    letter-spacing:0.04em;
+  }
+  .power{ display:flex; align-items:center; gap:8px; }
+  .power-led{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+  }
+  .lv-tag{ opacity:0.85; }
+
+  .wrap{ max-width: 760px; margin:0 auto; padding: 0 26px; position:relative; z-index:1; }
+  section{ padding: 64px 0; position:relative; }
+  @media (max-width: 768px){ section{ padding: 44px 0; } }
+
+  /* ---------- menu nav ---------- */
+  .menu-box{
+    position:fixed;
+    top:26px; right:26px;
+    z-index:50;
+    width:150px;
+    background:var(--scr-3);
+    border:3px solid var(--scr-0);
+    box-shadow: 0 0 0 3px var(--scr-2) inset;
+    opacity: 0.7;
+
+  }
+  .menu-box button{
+    display:block; width:100%; text-align:left;
+    font-family:var(--font-body); 
+    font-size:0.8rem; letter-spacing:0.03em; text-transform:uppercase;
+    font-weight: 600;
+    background:none; border:none; border-bottom:2px dashed var(--scr-1);
+    padding:9px 14px; cursor:pointer; color:var(--scr-0);
+    opacity: 0.7;
+  }
+  .menu-box button:last-child{ border-bottom:none; }
+  .menu-box button::before{ content:'  '; }
+  .menu-box button:hover::before, .menu-box button.active::before{ content:'> '; }
+  .menu-box button:hover, .menu-box button.active{ background:var(--scr-0); color:var(--scr-3); }
+  @media (max-width: 860px){ .menu-box{ display:none; } }
+
+  .reveal{ opacity:0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- title screen ---------- */
+  .hero{
+    min-height: 78vh;
+    display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+    font-family: var(--font-body);
+    padding-top: 40px; padding-bottom:40px;
+  }
+  .eyebrow{
+    font-size:1.05rem; letter-spacing:0.15em; opacity:0.75; margin-bottom:20px;
+    font-family: var(--font-jer);
+    font-weight: 500; 
+  }
+  .press-start .blink {
+    display: inline-block;
+    position: relative;
+    top: -9px;
+  }
+  .blink{ animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero .name{
+    font-family: var(--font-display);
+    font-size: clamp(2.7rem, 4.4vw, 9rem);
+    line-height:1.3;
+    transform: scaleY(1.4);
+    letter-spacing: 3px;
+    margin: 0 0 30px 0;
+  }
+
+  mark.highlight{
+    background:var(--accent); color:var(--scr-3);
+    padding: 2px 6px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hero .tagline{
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height:1.5;
+    max-width: 540px;
+    margin: 0 0 26px 0;
+    letter-spacing:-1.2px;
+    font-weight: 500; 
+  }
+  .stat-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px;
+    font-family: var(--font-body);
+  }
+  .tags {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--font-jer);
+    color: #736264bc;
+  }
+  .press-start{
+    font-family:var(--font-display); font-size:1.5rem; line-height:1.8;
+    background:none; border:3px solid var(--scr-0); color:var(--scr-0);
+    padding:12px 16px; cursor:pointer;
+  }
+  .press-start:hover{ background:var(--scr-0); color:var(--scr-3); }
+
+  /* ---------- section titles ---------- */
+  h2.section-title{
+    font-family:var(--font-display);
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+    line-height:1.6;
+    margin: 0 0 34px 0;
+    display:flex; align-items:center; gap:12px;
+  }
+  h2.section-title .tag-no{
+    font-size:0.8rem;
+    background:var(--scr-2);
+    border:2px solid var(--scr-0);
+    padding:4px 8px;
+  }
+
+  /* ---------- dialogue textbox ---------- */
+  .textbox{
+    position:relative;
+    background:var(--scr-2);
+    border: 3px solid var(--scr-0);
+    box-shadow: 0 0 0 3px var(--scr-3) inset;
+    padding: 26px 28px 34px;
+  }
+  .textbox p{ margin:0 0 14px 0; font-size:1.2rem; line-height:1.55; }
+  .textbox p:last-of-type{ margin-bottom:0; }
+  .continue-cursor{
+    position:absolute; right:16px; bottom:10px;
+    font-family:var(--font-display); font-size:0.7rem;
+  }
+
+  .about-grid{ display:flex; gap:26px; align-items:flex-start; }
+  @media (max-width:600px){ .about-grid{ flex-direction:column; } }
+  .sprite{
+    flex-shrink:0;
+    width:88px; height:88px;
+    background:var(--scr-0); color:var(--scr-3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:1.1rem;
+    border:3px solid var(--scr-0);
+    box-shadow: 3px 3px 0 var(--scr-1), 0 0 0 3px var(--scr-3) inset;
+  }
+
+  /* ---------- interests: item grid ---------- */
+  .items-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+  }
+  .item-slot{
+    background:var(--scr-2);
+    border:3px solid var(--scr-0);
+    padding:16px 16px 18px;
+  }
+  .item-slot .glyph{
+    width:28px; height:28px;
+    background:var(--scr-0); color:var(--scr-3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:0.75rem;
+    margin-bottom:12px;
+  }
+  .item-slot h3{
+    font-family:var(--font-display); font-size:0.8rem; line-height:1.5;
+    margin:0 0 8px 0; text-transform:uppercase;
+  }
+  .item-slot p{ margin:0; font-size:1.05rem; line-height:1.4; }
+
+  /* ---------- publications: quest log ---------- */
+  .quest-log{ display:flex; flex-direction:column; gap:16px; }
+  .quest-entry{
+    background:var(--scr-2);
+    border:3px solid var(--scr-0);
+    padding: 18px 22px;
+  }
+  .quest-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .quest-id{ font-family:var(--font-display); font-size:0.7rem; }
+  .quest-status{
+    font-size:0.9rem; border:2px solid var(--scr-0); padding:2px 8px;
+    background:var(--scr-3);
+  }
+  .quest-title{ font-size:1.35rem; margin:0 0 4px 0; }
+  .quest-venue{ font-size:1.05rem; opacity:0.85; margin:0 0 2px 0; }
+  .quest-authors{ font-size:1.02rem; opacity:0.85; margin:0 0 14px 0; }
+  .quest-links{ display:flex; gap:10px; flex-wrap:wrap; }
+  .quest-links a{
+    font-size:1rem; border:2px solid var(--scr-0); padding:4px 10px;
+    text-decoration:none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .quest-links a:hover{ background:var(--scr-0); color:var(--scr-3); }
+
+  /* ---------- talks: event log ---------- */
+  .event-log{ display:flex; flex-direction:column; gap:0; }
+  .event-entry{
+    display:flex; gap:14px; align-items:baseline;
+    padding: 12px 0; border-bottom:2px dashed var(--scr-1);
+  }
+  .event-log .event-entry:last-child{ border-bottom:none; }
+  .event-date{ font-size:1.05rem; opacity:0.8; flex-shrink:0; width:96px; }
+  .event-title{ font-size:1.15rem; margin:0; }
+  .event-place{ font-size:1rem; opacity:0.8; margin:2px 0 0 0; }
+
+  /* ---------- contact: save point ---------- */
+  .save-point{
+    background:var(--scr-2);
+    border:3px solid var(--scr-0);
+    box-shadow: 0 0 0 3px var(--scr-3) inset;
+    padding: 34px 30px;
+    text-align:center;
+  }
+  .save-point h2{
+    font-family:var(--font-display); font-size:1.05rem; line-height:1.6;
+    margin:0 0 14px 0;
+  }
+  .save-point p{ font-size:1.15rem; max-width:440px; margin:0 auto 24px; }
+  .save-menu{ display:inline-flex; flex-direction:column; align-items:flex-start; gap:2px; text-align:left; }
+  .save-menu a{
+    font-size:1.15rem; text-decoration:none; padding:6px 10px;
+  }
+  .save-menu a::before{ content:'  '; }
+  .save-menu a:hover::before{ content:'> '; }
+  .save-menu a:hover{ background:var(--scr-0); color:var(--scr-3); }
+
+  footer{
+    text-align:center; padding: 30px 0 36px;
+    font-family:var(--font-display); font-size:0.7rem; letter-spacing:0.08em;
+    color:var(--scr-1);
+  }
+
+  .page-margin{ padding: 26px 14px; }
+  @media (max-width:600px){ .page-margin{ padding:14px 8px; } }
+</style>
+</head>
+<body>
+<div class="page-margin">
+<div class="screen">
+
+  <div class="topbar">
+    <span class="power"><span class="power-led"></span>POWER</span>
+    <span class="lv-tag">LV. M.S. CANDIDATE</span>
+  </div>
+
+  <nav class="menu-box" aria-label="section navigation">
+    <button data-target="#about">About</button>
+    <button data-target="#interests">Interests</button>
+    <button data-target="#publications">Publications</button>
+    <button data-target="#talks">Talks</button>
+    <button data-target="#contact">Contact</button>
+  </nav>
+
+  <!-- ===== HERO / TITLE SCREEN ===== -->
+  <header class="hero wrap">
+    <span class="eyebrow">LOADING PROFILE<span class="blink">...</span></span>
+    <h1 class="name"><mark class="highlight">Jungyoon Kang</mark></h1>
+    <p class="tagline">Master's student in Clinical Psychology at Seoul National University — researching emotion regulation, anxiety, and digital tools for mental health care.</p>
+    <div class="stat-row">
+      <span class="tag">[ Clinical Psychology ]</span>
+      <span class="tag">[ Computational Clinical Science ]</span>
+      <span class="tag">[ Seoul National University ]</span>
+
+    </div>
+    <button class="press-start" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">
+      <span class="blink">▶</span> PRESS START
+    </button>
+  </header>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="wrap reveal">
+      <h2 class="section-title"><span class="tag-no">01</span>About</h2>
+      <div class="about-grid">
+        <div class="sprite" aria-hidden="true">JK</div>
+        <div class="textbox" style="flex:1;">
+          <p>I'm a master's student in <strong>Clinical Psychology</strong> at Seoul National University. I'm curious about how people regulate difficult emotions, and how that understanding can shape better, more accessible mental health care.</p>
+          <p>My current work looks at anxiety and mood-related difficulties, and how everyday tools — from self-report measures to digital interventions — can be designed to actually reflect a person's experience rather than flatten it.</p>
+          <p>Outside of research, I enjoy long walks, good coffee, and conversations that wander off-topic in useful ways.</p>
+          <span class="continue-cursor blink">▼</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTERESTS ===== -->
+  <section id="interests">
+    <div class="wrap reveal">
+      <h2 class="section-title"><span class="tag-no">02</span>Interests</h2>
+      <div class="items-grid">
+        <div class="item-slot">
+          <div class="glyph">01</div>
+          <h3>Emotion Regulation</h3>
+          <p>How people manage and reinterpret emotional experiences, and where regulation strategies break down.</p>
+        </div>
+        <div class="item-slot">
+          <div class="glyph">02</div>
+          <h3>Anxiety &amp; Mood</h3>
+          <p>Cognitive and behavioral patterns underlying anxiety, and how they shift across contexts.</p>
+        </div>
+        <div class="item-slot">
+          <div class="glyph">03</div>
+          <h3>Digital Mental Health</h3>
+          <p>Designing and evaluating app- or web-based interventions that support clinical care.</p>
+        </div>
+        <div class="item-slot">
+          <div class="glyph">04</div>
+          <h3>Assessment</h3>
+          <p>Building measures that capture lived experience more faithfully than standard checklists.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PUBLICATIONS: QUEST LOG ===== -->
+  <section id="publications">
+    <div class="wrap reveal">
+      <h2 class="section-title"><span class="tag-no">03</span>Publications</h2>
+      <div class="quest-log">
+        <article class="quest-entry">
+          <div class="quest-head">
+            <span class="quest-id">QUEST No.001</span>
+            <span class="quest-status">✔ COMPLETE — 2025</span>
+          </div>
+          <h3 class="quest-title">Emotion Regulation Strategies and Anxiety Symptom Trajectories (sample title)</h3>
+          <p class="quest-venue">Journal of Clinical Psychology, 2025</p>
+          <p class="quest-authors">J. Kang, Advisor Name, et al.</p>
+          <div class="quest-links">
+            <a href="#">[ PDF ]</a>
+            <a href="#">[ DOI ]</a>
+          </div>
+        </article>
+        <article class="quest-entry">
+          <div class="quest-head">
+            <span class="quest-id">QUEST No.002</span>
+            <span class="quest-status">✔ COMPLETE — 2024</span>
+          </div>
+          <h3 class="quest-title">A Brief Digital Intervention for Momentary Anxiety (sample title)</h3>
+          <p class="quest-venue">Poster session, Korean Psychological Association Conference, 2024</p>
+          <p class="quest-authors">J. Kang</p>
+          <div class="quest-links">
+            <a href="#">[ POSTER ]</a>
+          </div>
+        </article>
+        <article class="quest-entry">
+          <div class="quest-head">
+            <span class="quest-id">QUEST No.003</span>
+            <span class="quest-status">✔ COMPLETE — 2023</span>
+          </div>
+          <h3 class="quest-title">Rethinking Self-Report Measures in Clinical Assessment (sample title)</h3>
+          <p class="quest-venue">Undergraduate Honors Thesis, 2023</p>
+          <p class="quest-authors">J. Kang</p>
+          <div class="quest-links">
+            <a href="#">[ PDF ]</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TALKS: EVENT LOG ===== -->
+  <section id="talks">
+    <div class="wrap reveal">
+      <h2 class="section-title"><span class="tag-no">04</span>Talks &amp; Activities</h2>
+      <div class="event-log">
+        <div class="event-entry">
+          <span class="event-date">2025.06</span>
+          <div>
+            <p class="event-title">"Rethinking Anxiety Assessment" — talk (sample)</p>
+            <p class="event-place">Clinical Psychology Workshop, Online</p>
+          </div>
+        </div>
+        <div class="event-entry">
+          <span class="event-date">2024.11</span>
+          <div>
+            <p class="event-title">Poster presentation (sample)</p>
+            <p class="event-place">Korean Psychological Association Conference, Seoul</p>
+          </div>
+        </div>
+        <div class="event-entry">
+          <span class="event-date">2024.02</span>
+          <div>
+            <p class="event-title">Lab seminar presentation (sample)</p>
+            <p class="event-place">Seoul National University</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT: SAVE POINT ===== -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="save-point reveal">
+        <h2>SAVE BEFORE YOU GO?</h2>
+        <p>Happy to talk about research, collaborations, or anything clinical psychology related — feel free to reach out.</p>
+        <div class="save-menu">
+          <a href="mailto:jungyoon.kang@example.ac.kr">EMAIL</a>
+          <a href="#">GOOGLE SCHOLAR</a>
+          <a href="#">GITHUB</a>
+          <a href="#">DOWNLOAD CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>TO BE CONTINUED...</footer>
+
+</div>
+</div>
+
+<script>
+  document.querySelectorAll('.menu-box button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelector(btn.dataset.target)?.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el=>io.observe(el));
+
+  const sections = ['about','interests','publications','talks','contact'].map(id=>document.getElementById(id));
+  const menuButtons = document.querySelectorAll('.menu-box button');
+  const sectionObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        menuButtons.forEach(b=>b.classList.toggle('active', b.dataset.target === '#'+entry.target.id));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s=> s && sectionObserver.observe(s));
+</script>
+</body>
+</html>
