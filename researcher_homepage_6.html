@@ -132,7 +132,7 @@
 
   .hero .name{
     font-family: var(--font-display);
-    font-size: clamp(2.7rem, 4.4vw, 9rem);
+    font-size: clamp(2.5rem, 4vw, 3rem);
     line-height:1.3;
     transform: scaleY(1.4);
     letter-spacing: 3px;
@@ -156,14 +156,22 @@
   .stat-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px;
     font-family: var(--font-body);
   }
-  .tags {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
   .tag {
-    font-family: var(--font-jer);
+  font-family: var(--font-jer);
+  color: #736264bc;
+  text-decoration: none;
+}
+  .tag:visited,
+  .tag:active,
+  .tag:focus {
     color: #736264bc;
+    text-decoration: none;
+    position: static;
+    transform: none;
+    top: auto;
+  }
+  .tag:hover {
+    text-decoration: underline;
   }
   .press-start{
     font-family:var(--font-display); font-size:1.5rem; line-height:1.8;
@@ -340,9 +348,12 @@
     <h1 class="name"><mark class="highlight">Jungyoon Kang</mark></h1>
     <p class="tagline">Master's student in Clinical Psychology at Seoul National University — researching addiction, computational psychiatry, and neuromodulation for mental health.</p>
     <div class="stat-row">
-      <span class="tag">[ Clinical Psychology ]</span>
-      <span class="tag">[ Computational Clinical Science ]</span>
-      <span class="tag">[ Computational Psychiatry ]</span>
+      <a class="tag" href="https://ccs-lab.github.io/">
+      [ Computational Clinical Science ] </a>
+      <span class="tag">
+      [ Clinical Psychology ] </span>
+      <a class="tag" href="https://www.snu.ac.kr/">
+      [ Seoul National University ] </a>
 
     </div>
     <button class="press-start" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">
